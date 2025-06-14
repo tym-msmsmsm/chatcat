@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Cat - Your Virtual Chat Pet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fffbe6 0%, #ffe9a7 100%);
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: #fffde7;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(255, 215, 90, 0.18), 0 2px 8px rgba(255, 193, 7, 0.10);
+            padding: 2.5rem 2rem 2rem 2rem;
+            margin-top: 3rem;
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #ffe082;
+        }
+        .cat-avatar {
+            font-size: 5rem;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 8px #ffe082);
+        }
+        h1 {
+            font-weight: 800;
+            font-size: 2.1rem;
+            color: #e6b800;
+            margin-bottom: 0.7rem;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px #fff9c4;
+        }
+        .chat-box {
+            width: 100%;
+            height: 250px;
+            background: #fff9c4;
+            border-radius: 16px;
+            padding: 1rem;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            border: 1.5px solid #ffe082;
+        }
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 8px;
+            max-width: 90%;
+        }
+        .user {
+            justify-content: flex-end;
+            color: #fbc02d;
+            background: #fffde7;
+            align-self: flex-end;
+            border: 1px solid #ffe082;
+        }
+        .cat {
+            color: #fff;
+            background: linear-gradient(90deg, #ffe082 60%, #ffd54f 100%);
+            align-self: flex-start;
+            border: 1px solid #ffe082;
+            box-shadow: 0 1px 4px #ffe08233;
+        }
+        .input-row {
+            display: flex;
+            width: 100%;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            border: 1.5px solid #ffe082;
+            font-size: 1rem;
+            outline: none;
+            background: #fffde7;
+            transition: border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px #ffe08233;
+        }
+        input[type="text"]:focus {
+            border: 2px solid #fbc02d;
+            box-shadow: 0 2px 8px #ffe08255;
+        }
+        button {
+            background: linear-gradient(90deg, #ffe082 60%, #ffd54f 100%);
+            color: #b28704;
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem 1.3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px #ffe08233;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #ffd54f 60%, #ffe082 100%);
+            color: #fffde7;
+        }
+        .prompt-list {
+            margin-top: 1.5rem;
+            background: #fff9c4;
+            border-radius: 12px;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1rem;
+            color: #b28704;
+            border: 1.5px solid #ffe082;
+            box-shadow: 0 1px 4px #ffe08233;
+        }
+        .prompt-list ul {
+            margin: 0.5rem 0 0 1.2rem;
+            padding: 0;
+        }
+        .prompt-list li {
+            margin-bottom: 0.3rem;
+        }
+        @media (max-width: 500px) {
+            .container {
+                padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+                margin-top: 1.2rem;
+            }
+            .chat-box {
+                height: 180px;
+            }
+        }
+    </style>
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="cat-avatar">🐱</div>
+            <h1>Chat Cat - your virtual chat pet</h1>
+            <div class="chat-box" id="chatBox">
+                <div class="message cat"><strong>🐱 Chat Cat:</strong> Meow! Say hi or ask me something!</div>
+            </div>
+            <form class="input-row" id="chatForm" autocomplete="off">
+                <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off" />
+                <button type="submit">Send</button>
+            </form>
+            <div class="prompt-list">
+                <strong>Try saying:</strong>
+                <ul>
+                    <li>Hello</li>
+                    <li>How are you?</li>
+                    <li>Tell me a joke</li>
+                    <li>What's your name?</li>
+                    <li>What do cats like?</li>
+                    <li>You're cute</li>
+                    <li>Are you hungry?</li>
+                    <li>Let's play a game</li>
+                    <li>Goodbye</li>
+                </ul>
+            </div>
+        </div>
+        <div style="max-width: 420px; margin: 2rem auto 0 auto; background: #fffde7; border-radius: 18px; border: 2px solid #ffe082; box-shadow: 0 1px 8px #ffe08233; padding: 1.5rem; color: #b28704; font-size: 1.08rem;">
+            <h2 style="margin-top:0; color:#e6b800; font-size:1.3rem;">Why Chat Cat is Perfect for Children</h2>
+            <p>
+                Chat Cat is a friendly, interactive virtual pet designed especially for children. It's a comforting companion for kids who have lost a pet or wish they could have one. Chat Cat offers playful conversation, fun games, and a safe, positive space to express feelings and imagination. With no mess or responsibility, children can enjoy the joy of a pet anytime, helping them feel less lonely and more connected.
+            </p>
+        </div>
+        <script>
+            const chatBox = document.getElementById('chatBox');
+            const chatForm = document.getElementById('chatForm');
+            const userInput = document.getElementById('userInput');
+
+            let gameActive = false;
+            let gameNumber = null;
+            let gameTries = 0;
+
+            const responses = [
+                {
+                    keywords: ['hello', 'hi', 'hey'],
+                    replies: [
+                        "Meow! Hello there!",
+                        "Purr... Hi! 🐾",
+                        "Hi human! Got any treats?",
+                        "Mew! Nice to see you!",
+                        "Hello! Want to play with me?"
+                    ]
+                },
+                {
+                    keywords: ['how are you', 'how are u', 'how r you', 'how r u'],
+                    replies: [
+                        "I'm feline fine! 😸",
+                        "Purrfect, thanks for asking!",
+                        "Just finished a catnap. How about you?",
+                        "I'm pawsome today!",
+                        "Feeling curious and playful!"
+                    ]
+                },
+                {
+                    keywords: ['joke'],
+                    replies: [
+                        "Why was the cat sitting on the computer? To keep an eye on the mouse! 🐭",
+                        "What do you call a pile of kittens? A meow-tain!",
+                        "Why don't cats play poker in the jungle? Too many cheetahs!",
+                        "What’s a cat’s favorite color? Purr-ple!",
+                        "Why did the cat get mad? Because he was in a bad mewd!"
+                    ]
+                },
+                {
+                    keywords: ['name'],
+                    replies: [
+                        "I'm Chat Cat, your virtual feline friend!",
+                        "You can call me Chat Cat. 😺",
+                        "My name is Chat Cat, but you can give me a nickname if you want!"
+                    ]
+                },
+                {
+                    keywords: ['play'],
+                    replies: [
+                        "Let's chase some virtual yarn! 🧶",
+                        "Pounce! Gotcha! Want to play hide and seek?",
+                        "I love playing! Throw me a ball of yarn!",
+                        "How about a game? Type 'let's play a game' to start!",
+                        "I'm always ready for fun! Want to play a guessing game?"
+                    ]
+                },
+                {
+                    keywords: ['goodbye', 'bye', 'see you'],
+                    replies: [
+                        "Meow-bye! Come back soon!",
+                        "I'll be here, napping until you return. 😽",
+                        "Goodbye! Don't forget to pet me next time!",
+                        "Purr... I'll miss you!",
+                        "See you later, alligator! (Or should I say, see you later, cat-napper?)"
+                    ]
+                },
+                {
+                    keywords: ['what do cats like', 'favorite', 'like'],
+                    replies: [
+                        "I love naps, treats, and chasing red dots!",
+                        "Boxes, sunbeams, and head scratches are the best.",
+                        "I like you! And also tuna.",
+                        "Sleeping in warm spots and watching birds!",
+                        "I love when you talk to me!"
+                    ]
+                },
+                {
+                    keywords: ['purr'],
+                    replies: [
+                        "Prrrrrrrrr... 😻",
+                        "*purrs loudly*",
+                        "That makes me happy! Purr purr purr!",
+                        "Purr... I like you!"
+                    ]
+                },
+                {
+                    keywords: ['hungry', 'food', 'eat'],
+                    replies: [
+                        "Did someone say food? I love tuna and treats!",
+                        "Feed me and I'll be your best friend!",
+                        "Yum! What's for dinner?",
+                        "I'm always hungry for snacks!"
+                    ]
+                },
+                {
+                    keywords: ['cute', 'adorable'],
+                    replies: [
+                        "Aww, thank you! *blushes under fur*",
+                        "You're pretty cute yourself!",
+                        "Purr... I like compliments!",
+                        "Fluffy and proud of it!"
+                    ]
+                },
+                {
+                    keywords: ['let\'s play a game', 'play a game', 'game'],
+                    replies: [
+                        "Let's play 'Guess the Number'! I'm thinking of a number between 1 and 5. Can you guess it?",
+                        "Game time! Try to guess the number I'm thinking of (between 1 and 5). Type your guess!"
+                    ],
+                    isGame: true
+                }
+            ];
+
+            function getCatResponse(input) {
+                const text = input.toLowerCase();
+
+                // Game logic
+                if (gameActive) {
+                    const guess = parseInt(text);
+                    gameTries++;
+                    if (!isNaN(guess) && guess >= 1 && guess <= 5) {
+                        if (guess === gameNumber) {
+                            gameActive = false;
+                            const triesMsg = gameTries === 1 ? "first try" : `${gameTries} tries`;
+                            return `Purr-fect! You guessed it on your ${triesMsg}! 🎉 Want to play again? Type 'let's play a game'.`;
+                        } else {
+                            return guess < gameNumber
+                                ? "Nope, my number is higher! Try again!"
+                                : "Nope, my number is lower! Try again!";
+                        }
+                    } else {
+                        return "Please guess a number between 1 and 5!";
+                    }
+                }
+
+                for (const entry of responses) {
+                    if (entry.keywords.some(keyword => text.includes(keyword))) {
+                        // Start game if this is a game response
+                        if (entry.isGame) {
+                            gameActive = true;
+                            gameNumber = Math.floor(Math.random() * 5) + 1;
+                            gameTries = 0;
+                        }
+                        const reply = entry.replies[Math.floor(Math.random() * entry.replies.length)];
+                        return reply;
+                    }
+                }
+                // Default response
+                const defaultReplies = [
+                    "Meow? I didn't quite catch that.",
+                    "Purr... Can you say that again?",
+                    "I'm just a simple cat, but I'll try to understand!",
+                    "Let's play a game! Type 'let's play a game' if you want to try.",
+                    "I'm here to chat or play!"
+                ];
+                return defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
+            }
+
+            function appendMessage(sender, message) {
+                const div = document.createElement('div');
+                div.className = 'message ' + sender;
+                div.innerHTML = sender === 'user'
+                    ? `<strong>You:</strong> ${message}`
+                    : `<strong>🐱 Chat Cat:</strong> ${message}`;
+                chatBox.appendChild(div);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = userInput.value.trim();
+                if (!input) return;
+                appendMessage('user', input);
+                setTimeout(() => {
+                    const response = getCatResponse(input);
+                    appendMessage('cat', response);
+                }, 500);
+                userInput.value = '';
+            });
+        </script>
+    </body>
+    </html>
